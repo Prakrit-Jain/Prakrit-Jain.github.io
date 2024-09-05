@@ -85,7 +85,7 @@
       <h1>Crowdfunding DApp</h1>
     </header>
     <div class="container">
-      <button id="connectWallet">Connect Wallet</button>
+      <button id="connectWallet">Connect Sepolia Wallet</button>
       <div id="walletAddress"></div>
 
       <div class="section">
@@ -544,12 +544,12 @@
 
       async function createCampaign() {
         const goal = document.getElementById("goal").value;
-		console.log("here", contract);
         const duration = document.getElementById("duration").value;
         const tx = await contract.createCampaign(goal, duration);
-		console.log("heress");
+		console.log("Please wait while the tx is confirmed");
         await tx.wait();
-        alert("Campaign Created!");
+		const campaignId = await contract.campaignCount();
+        alert(`Campaign Created! Id: ${campaignId}`);
       }
 
       async function contribute() {
@@ -558,6 +558,7 @@
         ).value;
         const amount = document.getElementById("amount").value;
         const tx = await contract.contribute(campaignId, amount);
+		console.log("Please wait while the tx is confirmed");
         await tx.wait();
         alert("Contribution Successful!");
       }
@@ -565,6 +566,7 @@
       async function cancelContribution() {
         const campaignId = document.getElementById("campaignIdCancel").value;
         const tx = await contract.cancelContribution(campaignId);
+		console.log("Please wait while the tx is confirmed");
         await tx.wait();
         alert("Contribution Cancelled!");
       }
@@ -572,6 +574,7 @@
       async function withdrawFunds() {
         const campaignId = document.getElementById("campaignIdWithdraw").value;
         const tx = await contract.withdrawFunds(campaignId);
+		console.log("Please wait while the tx is confirmed");
         await tx.wait();
         alert("Funds Withdrawn!");
       }
@@ -579,6 +582,7 @@
       async function refund() {
         const campaignId = document.getElementById("campaignIdRefund").value;
         const tx = await contract.refund(campaignId);
+		console.log("Please wait while the tx is confirmed");
         await tx.wait();
         alert("Refund Successful!");
       }
